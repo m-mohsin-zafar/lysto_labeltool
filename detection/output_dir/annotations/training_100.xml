@@ -1,0 +1,28 @@
+<annotation>
+    <folder>images_dab</folder>
+    <filename>training_100.png</filename>
+    <path>C:\Users\mohsi\PycharmProjects\labeltool\detection\input_dir\images_dab\training_100.png</path>
+    <source>
+        <database>Lysto-19</database>
+    </source>
+    <size>
+        <width>256</width>
+        <height>256</height>
+        <depth>3</depth>
+    </size>
+    <segmented>0</segmented>
+    
+    <object>
+        <name>lymphocyte</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <difficult>0</difficult>
+        <bndbox>
+            <xmin>77</xmin>
+            <ymin>111</ymin>
+            <xmax>106</xmax>
+            <ymax>136</ymax>
+        </bndbox>
+    </object>
+    
+</annotation>
