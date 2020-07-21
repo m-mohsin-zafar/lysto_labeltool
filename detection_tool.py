@@ -281,7 +281,7 @@ class DetectionTool:
         self.det_ellipse_radius_choice_label = Label(self.det_options_container_C, text="Ellipse Radius:",
                                                      bg="#DCDCDC", anchor="nw", padx=4)
         self.ellipse_radius_options = [3, 4, 5, 6, 7, 8]
-        self.ellipse_radius_choice = StringVar()
+        self.ellipse_radius_choice = IntVar()
         self.ellipse_radius_choice.set(self.ellipse_radius_options[3])
         self.view_ellipse_radius = ttk.OptionMenu(self.det_options_container_C, self.ellipse_radius_choice,
                                                   self.ellipse_radius_options[3], *self.ellipse_radius_options,
