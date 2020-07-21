@@ -278,6 +278,15 @@ class DetectionTool:
 
         self.det_options_container_C = Frame(self.det_main_container, bg="#F5F5F5")
 
+        self.det_ellipse_radius_choice_label = Label(self.det_options_container_C, text="Ellipse Radius:",
+                                                     bg="#DCDCDC", anchor="nw", padx=4)
+        self.ellipse_radius_options = [3, 4, 5, 6, 7, 8]
+        self.ellipse_radius_choice = StringVar()
+        self.ellipse_radius_choice.set(self.ellipse_radius_options[3])
+        self.view_ellipse_radius = ttk.OptionMenu(self.det_options_container_C, self.ellipse_radius_choice,
+                                                  self.ellipse_radius_options[3], *self.ellipse_radius_options,
+                                                  style='mask_preview_options.TMenubutton',
+                                                  command=self.set_ellipse_radius)
         self.det_mask_preview_choice_label = Label(self.det_options_container_C, text="Preview Mask:",
                                                    bg="#DCDCDC",
                                                    anchor="nw", padx=4)
@@ -313,11 +322,13 @@ class DetectionTool:
         self.det_rb_yes.grid(row=3, column=0, padx=10, pady=(5, 0), sticky="nw")
         self.det_rb_no.grid(row=3, column=1, padx=10, pady=(5, 0), sticky="nw")
         self.det_options_container_C.grid(row=4, column=2, rowspan=4, padx=10, pady=5, sticky="nwe")
-        self.det_mask_preview_choice_label.grid(row=0, column=0, padx=(10, 0), pady=(0, 5), sticky="nwe")
-        self.view_mask.grid(row=0, column=1, padx=(0, 10), pady=(0, 5), sticky='nwe')
-        self.det_gen_mask_img_btn.grid(row=1, column=0, columnspan=2, padx=10, pady=3, sticky="we")
-        self.det_save_patches_btn.grid(row=2, column=0, padx=10, pady=3)
-        self.det_save_results_btn.grid(row=2, column=1, padx=10, pady=3)
+        self.det_ellipse_radius_choice_label.grid(row=0, column=0, padx=(10, 0), pady=(0, 5), sticky="nwe")
+        self.view_ellipse_radius.grid(row=0, column=1, padx=(0, 10), pady=(0, 5), sticky='nwe')
+        self.det_mask_preview_choice_label.grid(row=1, column=0, padx=(10, 0), pady=3, sticky="nwe")
+        self.view_mask.grid(row=1, column=1, padx=(0, 10), pady=3, sticky='nwe')
+        self.det_gen_mask_img_btn.grid(row=2, column=0, columnspan=2, padx=10, pady=3, sticky="we")
+        self.det_save_patches_btn.grid(row=3, column=0, padx=10, pady=3)
+        self.det_save_results_btn.grid(row=3, column=1, padx=10, pady=3)
 
         # Main Panel - [End]
 
@@ -436,7 +447,7 @@ class DetectionTool:
             progress_df.to_csv(os.path.join(self.det_inp_dir, 'progress.csv'), index=False)
             timestamp = str(datetime.now().timestamp()).replace('.', '_')
             results_dump_df = pd.DataFrame(self.result)
-            results_dump_df.to_json(os.path.join(self.det_out_dir, 'dumps', 'results_'+timestamp+'.json'))
+            results_dump_df.to_json(os.path.join(self.det_out_dir, 'dumps', 'results_' + timestamp + '.json'))
             self.progress_saved = True
 
     def det_next_img(self):
@@ -504,6 +515,9 @@ class DetectionTool:
             preview_mask = ImageTk.PhotoImage(self.curr_resultant_masks[self.strings_to_keys[v]])
             self.det_out_mask_img_preview.config(image=preview_mask)
             self.det_out_mask_img_preview.image = preview_mask
+
+    def set_ellipse_radius(self, v):
+        self.elipse_radius = v
 
     def det_save_patches(self):
         if not self.bboxList:
@@ -801,5 +815,3 @@ class DetectionTool:
                 self.super_parent.destroy()
         else:
             self.super_parent.destroy()
-
-
