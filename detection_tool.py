@@ -524,11 +524,17 @@ class DetectionTool:
             messagebox.showwarning(title="Data Warning", message="No, Bounding Boxes Found!")
         else:
             im = Image.open(self.det_curr_dab_img_preview_path)
-            odir = os.path.join(self.det_out_dir, 'patches')
+            im_org = Image.open(self.det_curr_org_img_preview_path)
+            odir_dab = os.path.join(self.det_out_dir, 'patches', 'dab')
+            odir_org = os.path.join(self.det_out_dir, 'patches', 'org')
             for i, bbox in enumerate(self.bboxList):
-                ofile = os.path.join(odir, self.imagename.split('.')[0] + '_' + str(i) + '.png')
-                crp_im = im.crop(bbox)
-                crp_im.save(ofile)
+                ofile_dab = os.path.join(odir_dab, self.imagename.split('.')[0] + '_' + str(i) + '.png')
+                ofile_org = os.path.join(odir_org, self.imagename.split('.')[0] + '_' + str(i) + '.png')
+                crp_im_dab = im.crop(bbox)
+                crp_im_org = im_org.crop(bbox)
+                crp_im_dab.save(ofile_dab)
+                crp_im_org.save(ofile_org)
+
 
     def det_gen_mask_img(self):
         if self.det_curr_dab_img_preview and self.bboxList:
@@ -600,10 +606,11 @@ class DetectionTool:
 
         # TODO: 3. Write annotations to tree list view
 
-        # 4. Update Images Done Label
-        self.det_imgs_done += 1
-        self.det_imgs_done_fnames.append(self.imagename)
-        self.det_imgs_completed.config(text="Done: %d / %d " % (self.det_imgs_done, self.det_loaded_imgs_total))
+        # 4. Update Images Done Label only if the file was not already done.
+        if self.imagename not in self.det_imgs_done_fnames:
+            self.det_imgs_done += 1
+            self.det_imgs_done_fnames.append(self.imagename)
+            self.det_imgs_completed.config(text="Done: %d / %d " % (self.det_imgs_done, self.det_loaded_imgs_total))
 
         # 5. Change Done Image Color, Clear BBox List
         self.det_imgs_name_list_box.itemconfig(self.det_curr_img_index, fg="blue")
