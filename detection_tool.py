@@ -167,8 +167,7 @@ class DetectionTool:
         self.det_org_img_preview = Label(self.det_main_container, image=self.default_img_preview, anchor="nw",
                                          padx=4, relief="ridge")
         # Canvas
-        self.det_canvas_dab_img = Canvas(self.det_main_container, width=self.img_w, height=self.img_h,
-                                         cursor="tcross")
+        self.det_canvas_dab_img = Canvas(self.det_main_container, cursor="tcross", width=self.img_w, height=self.img_h)
         self.det_canvas_dab_img.create_image(0, 0, image=self.default_img_preview, anchor="nw")
         self.det_canvas_dab_img.bind("<Motion>", self.mouse_move)
         self.det_canvas_dab_img.bind("<Button-1>", self.mouse_click)
@@ -205,7 +204,7 @@ class DetectionTool:
         self.det_canvas_dab_img.grid(row=1, column=1, padx=10, pady=5)
         self.det_out_mask_img_preview.grid(row=1, column=2, padx=10, pady=5)
         self.det_prev_img_btn.grid(row=2, column=0, padx=10, pady=3)
-        self.det_lymph_hint_frame.grid(row=2, column=1, padx=10, pady=5, sticky="nwes")
+        self.det_lymph_hint_frame.grid(row=2, column=1, padx=10, pady=3, sticky="s")
         self.det_lymph_count_lbl.grid(row=0, column=0, sticky="nwes")
         self.det_lymph_coords_lbl.grid(row=0, column=1, sticky="nwes")
         self.det_next_img_btn.grid(row=2, column=2, padx=10, pady=3)
@@ -252,7 +251,7 @@ class DetectionTool:
         self.det_bbox_size_header = Label(self.det_options_container_B, text="Choose Fixed BBox Size", bg="#DCDCDC",
                                           anchor="nw", padx=4)
 
-        self.det_bbox_size_slider = Scale(self.det_options_container_B, from_=16, to=32, resolution=2,
+        self.det_bbox_size_slider = Scale(self.det_options_container_B, from_=12, to=28, resolution=2,
                                           orient="horizontal",
                                           command=self.set_fixed_bbox_size, cursor="hand2", bg="#F5F5F5")
         self.fixed_bbox_size = self.det_bbox_size_slider.get()
@@ -535,7 +534,6 @@ class DetectionTool:
                 crp_im_dab.save(ofile_dab)
                 crp_im_org.save(ofile_org)
 
-
     def det_gen_mask_img(self):
         if self.det_curr_dab_img_preview and self.bboxList:
             # 1. Load DAB image in greyscale format and 5 New Black Image
@@ -601,7 +599,8 @@ class DetectionTool:
             'object_class': 1,
             'objects_count': len(self.bboxList),
             'ambiguity': self.annotations_type,
-            'bbox': self.bboxList
+            'bbox': self.bboxList,
+            'default_mask_folder': self.strings_to_keys[self.mask_choice.get()]
         }
 
         # TODO: 3. Write annotations to tree list view

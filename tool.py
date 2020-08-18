@@ -15,7 +15,6 @@ class LabelTool:
         self.main_frame.pack(fill=BOTH, expand=1)
         self.parent.resizable(width=FALSE, height=FALSE)
 
-
         # set up ttk styles
         self.style = ttk.Style(self.parent)
         self.style.configure('main_notebook.TNotebook', tabposition="n", padding=4)
