@@ -127,7 +127,7 @@ class DetectionTool:
                                               bg="#DCDCDC", anchor="nw", padx=4, width=115)
         self.in_dir_path_var.set("PATH = ")
         self.det_load_imgs_btn = Button(self.det_header_container, text="Load Images", relief="groove",
-                                        command=self.det_load_imgs, width=25, bg="#FFFFF0", cursor="hand2")
+                                        command=self.det_load_imgs, width=20, bg="#FFFFF0", cursor="hand2")
         self.det_choose_out_dir_btn = Button(self.det_header_container, text="Select Output Directory",
                                              relief="groove", command=self.select_det_output_dir, width=25,
                                              bg="#FFFFF0", cursor="hand2")
@@ -137,7 +137,7 @@ class DetectionTool:
         self.det_choose_out_dir_olabel.grid(row=1, column=1, columnspan=4, padx=10, pady=5)
         self.out_dir_path_var.set("PATH = ")
         self.det_save_prog_btn = Button(self.det_header_container, text="Save Progress", relief="groove",
-                                        command=self.det_save_progress, width=25, bg="#FFFFF0", cursor="hand2")
+                                        command=self.det_save_progress, width=20, bg="#FFFFF0", cursor="hand2")
 
         # Layouts
         self.det_header_container.grid(row=0, column=0, columnspan=3, padx=10, pady=10, sticky="nwe")
@@ -615,7 +615,10 @@ class DetectionTool:
         self.det_imgs_name_list_box.itemconfig(self.det_curr_img_index, fg="blue")
         self.clear_bbox_list()
 
-        # 6. Move to Next Image
+        # 6a. Set Annotations Type to CLear for next Image
+        self.annotations_choice.set("0")
+
+        # 6b. Move to Next Image
         self.det_next_img()
 
     def det_img_name_list_item_select(self, event=None):
@@ -821,3 +824,6 @@ class DetectionTool:
                 self.super_parent.destroy()
         else:
             self.super_parent.destroy()
+
+    def set_defaults(self):
+        pass
