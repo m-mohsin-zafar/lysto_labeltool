@@ -127,7 +127,7 @@ class DetectionTool:
                                               bg="#DCDCDC", anchor="nw", padx=4, width=115)
         self.in_dir_path_var.set("PATH = ")
         self.det_load_imgs_btn = Button(self.det_header_container, text="Load Images", relief="groove",
-                                        command=self.det_load_imgs, width=20, bg="#FFFFF0", cursor="hand2")
+                                        command=self.det_load_imgs, width=25, bg="#FFFFF0", cursor="hand2")
         self.det_choose_out_dir_btn = Button(self.det_header_container, text="Select Output Directory",
                                              relief="groove", command=self.select_det_output_dir, width=25,
                                              bg="#FFFFF0", cursor="hand2")
@@ -137,7 +137,7 @@ class DetectionTool:
         self.det_choose_out_dir_olabel.grid(row=1, column=1, columnspan=4, padx=10, pady=5)
         self.out_dir_path_var.set("PATH = ")
         self.det_save_prog_btn = Button(self.det_header_container, text="Save Progress", relief="groove",
-                                        command=self.det_save_progress, width=20, bg="#FFFFF0", cursor="hand2")
+                                        command=self.det_save_progress, width=25, bg="#FFFFF0", cursor="hand2")
 
         # Layouts
         self.det_header_container.grid(row=0, column=0, columnspan=3, padx=10, pady=10, sticky="nwe")
@@ -395,6 +395,10 @@ class DetectionTool:
         self.det_lists_frame.grid_rowconfigure(4, weight=1)
         # Lists Panel - [End]
 
+        # Shortcut Key Bindings
+        self.super_parent.bind("s", self.det_save_results)
+        self.super_parent.bind("g", self.det_gen_mask_img)
+
     def select_det_input_dir(self):
         folder_selected = filedialog.askdirectory(initialdir=os.getcwd(), title="Select Input Directory")
         self.in_dir_path_var.set("PATH = " + folder_selected)
@@ -534,7 +538,7 @@ class DetectionTool:
                 crp_im_dab.save(ofile_dab)
                 crp_im_org.save(ofile_org)
 
-    def det_gen_mask_img(self):
+    def det_gen_mask_img(self, event=None):
         if self.det_curr_dab_img_preview and self.bboxList:
             # 1. Load DAB image in greyscale format and 5 New Black Image
             im = cv2.imread(self.det_curr_dab_img_preview_path, 0)
@@ -573,7 +577,7 @@ class DetectionTool:
             self.masks_generated_for_current = True
             self.progress_saved = False
 
-    def det_save_results(self):
+    def det_save_results(self, event=None):
         # 1. Traverse resultant masks and save them
         for k in self.keys:
             opath = os.path.join(self.det_out_dir, k, self.imagename)
